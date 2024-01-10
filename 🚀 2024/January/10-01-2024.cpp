@@ -76,3 +76,31 @@ public:
         return burn(infectedN,parent);
     }
 };
+
+//Solution 2: It is from the Discuss section but I am unable to understand return min(left, right) - 1;.
+class Solution {
+public:
+    int maxDepth = 0;
+    int dfs(TreeNode* root, int start) {
+        if(root == NULL) return 0;
+
+        int left = dfs(root -> left, start);
+        int right = dfs(root -> right, start);
+
+        if(root -> val == start) {
+            maxDepth = max(maxDepth, max(left, right));
+            return -1;
+        }
+
+        if(left >= 0 && right >= 0)
+        return max(left, right) + 1;
+
+        maxDepth = max(maxDepth, abs(left - right));
+        return min(left, right) - 1;
+    }
+    
+    int amountOfTime(TreeNode* root, int start) {
+        dfs(root, start);
+        return maxDepth;
+    }
+};
